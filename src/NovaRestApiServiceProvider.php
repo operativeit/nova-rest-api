@@ -18,6 +18,7 @@ class NovaRestApiServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+
         $this->app->booted(function () {
             $this->routes();
         });
@@ -34,6 +35,7 @@ class NovaRestApiServiceProvider extends ServiceProvider
      */
     protected function routes()
     {
+
         if ($this->app->routesAreCached()) {
             return;
         }
@@ -44,6 +46,12 @@ class NovaRestApiServiceProvider extends ServiceProvider
         Route::middleware(['nova', Authorize::class])
             ->prefix('nova-vendor/nova-rest-api')
             ->group(__DIR__.'/../routes/api.php');
+
+        Route::prefix('api')
+            ->group(__DIR__.'/../routes/rest-api.php');
+
+
+
     }
 
     /**

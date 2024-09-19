@@ -3,7 +3,7 @@
 namespace EomPlus\NovaRestApi\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Auth\LoginRequest;
+use EomPlus\NovaRestApi\Http\Requests\Auth\LoginRequest;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Auth;
@@ -17,6 +17,7 @@ use Tymon\JWTAuth\Exceptions\JWTException;
  */
 class AuthController extends Controller
 {
+
     /**
      * Authenticate an user
      *
@@ -34,11 +35,20 @@ class AuthController extends Controller
      */
     public function login(LoginRequest $request)
     {
-        $credentials = $this->credentials($request);
+        $credentials = $request->validated();
         //$credentials+= [ 'enabled' => 1,  'verified' => 1 ];
 
+        $credentialsLdap = [
+                'samaccountname' =>  $request->get('username'),
+                'password' => $request->get('password'),
+        ];
+
         try {
-            if (! $token = auth()->attempt($credentials)) {
+            if ($token = Auth::guard('api')->attempt($credentialsLdap)) {
+                return $this->respondWithToken($token);
+            } else if ($token = Auth::guard('api')->attempt($credentials)) {
+                return $this->respondWithToken($token);
+            } else {
                 return response()->json(['message' => 'invalid_credentials'], 400);
             }
         } catch (JWTException $e) {
@@ -61,7 +71,7 @@ class AuthController extends Controller
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => Auth::factory()->getTTL() * 60,
+            'expires_in' => Auth::guard('api')->factory()->getTTL() * 60,
             'user' => [
             ],
         ]);
