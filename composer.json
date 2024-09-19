@@ -1,0 +1,39 @@
+{
+    "name": "eom-plus/nova-rest-api",
+    "description": "Automaic Rest API for Laravel Nova 4.",
+    "keywords": [
+        "laravel",
+        "nova",
+        "api"
+    ],
+    "authors": [
+        {
+            "name": "Sebastien CRAMATTE",
+            "email": "oss@operativeit.es",
+            "homepage": "https://operativeit.es"
+        }
+    ],
+    "license": "MIT",
+    "require": {
+        "php": "^7.3|^8.0",
+        "laravel/nova": "^4.0",
+        "outl1ne/nova-translations-loader": "^5.0.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "EomPlus\\NovaRestApi\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "EomPlus\\NovaRestApi\\ToolServiceProvider"
+            ]
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
