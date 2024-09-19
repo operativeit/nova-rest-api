@@ -9,7 +9,7 @@ use Laravel\Nova\Http\Middleware\Authenticate;
 use Laravel\Nova\Nova;
 use EomPlus\NovaRestApi\Http\Middleware\Authorize;
 
-class ToolServiceProvider extends ServiceProvider
+class NovaRestApiServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap any application services.

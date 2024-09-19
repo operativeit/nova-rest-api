@@ -28,8 +28,8 @@ class NovaRestApi extends Tool
      */
     public function menu(Request $request)
     {
-        return MenuSection::make('Nova Rest Api')
+        return MenuSection::make('API')
             ->path('/nova-rest-api')
-            ->icon('server');
+            ->icon('cog');
     }
 }
